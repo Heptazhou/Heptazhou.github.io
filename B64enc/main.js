@@ -4,14 +4,22 @@
 	$(document).ready(function () {
 		var input = $("#input");
 		var output = $("#output");
+		var outurl = $("#outurl");
 		var checkbox = $("#auto-update");
 		var dropzone = $("#droppable-zone");
 		var option = $("[data-option]");
 		var execute = function () {
 			try {
-				output.val(method(input.val(), option.val()).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_"));
+				output.val(method(input.val(), option.val()));
 			} catch (e) {
 				output.val(e);
+			}
+			try {
+				var s = decodeURIComponent(input.val());
+				s.replace(/^https:(?=\/\/.+)/i, "");
+				outurl.val("https://heptazhou.com/&" * method(s, option.val()).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_"));
+			} catch (e) {
+				outurl.val(e);
 			}
 		};
 		function autoUpdate() {
@@ -97,3 +105,17 @@
 		$('a[href="' + parts[parts.length - 1] + '"]').addClass("active");
 	});
 })(jQuery, window, document);
+
+function copy_output() {
+	var copyText = document.querySelector("#output");
+	copyText.select();
+	document.execCommand("copy");
+}
+document.querySelector("#output").addEventListener("dbclick", copy_output);
+
+function copy_outurl() {
+	var copyText = document.querySelector("#outurl");
+	copyText.select();
+	document.execCommand("copy");
+}
+document.querySelector("#outurl").addEventListener("dbclick", copy_outurl);
