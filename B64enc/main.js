@@ -27,9 +27,13 @@
 				output.val(e);
 			}
 			try {
-				var s = decodeURIComponent(input.val());
-				s.replace(/^https:(?=\/\/.+)/i, "");
-				outurl.val("https://heptazhou.com/&" + method(s, option.val()).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_"));
+				var s = input.val();
+				if (s == "") outurl.val(s);
+				else {
+					s = decodeURIComponent(s).replace(/^https:(?=\/\/.+)/i, "");
+					s = method(s, option.val()).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_");
+					outurl.val("https://heptazhou.com/&" + s);
+				}
 			} catch (e) {
 				outurl.val(e);
 			}
