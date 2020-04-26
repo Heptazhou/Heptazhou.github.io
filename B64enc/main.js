@@ -28,14 +28,14 @@
 			}
 			try {
 				var s = input.val().trim();
-				if (s == "") outurl.val("");
+				if (s === "") outurl.val("");
 				else {
 					s = decodeURIComponent(s);
 					// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
 					if (/^[a-z][a-z0-9+.-]*:.+$/i.test(s)) {
 						s = s.replace(/^https:(?=\/\/.+$)/i, "");
 					} else {
-						s = "//" + s;
+						if (s[0] !== "/") s = "//" + s;
 					}
 					s = method(s, option.val()).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_");
 					outurl.val("https://heptazhou.com/&" + s);
