@@ -15,37 +15,40 @@ function pdec(pointer) {
 }
 
 // 跳转
-function hash_redirect() {
+function hash_func() {
+	function redirect_to(dest) {
+		console.log(dest);
+		document.body.innerHTML = "";
+		document.body.style = "margin: 2.7rem";
+		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Click to redirect...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> ${dest}</a>\n`;
+	}
 	var list = gethash(location.hash);
 	if (list != null) {
 		for (var i = 0; i < list.length; i++) {
-			var item = list[i].replace(/=*$/, "").split("=");
-			switch (item.length) {
+			var para = list[i].replace(/=*$/, "").split("=");
+			switch (para.length) {
 				case 1:
 					break;
 				case 2:
-					switch (item[0]) {
+					switch (para[0]) {
 						case "url":
 							try {
-								var url = pdec(item[1]);
-								if (url.startsWith("//")) url = "https:" + url;
-								console.log(url);
-								document.body.innerHTML = "";
-								document.body.style = "margin: 2.7rem";
-								document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Click to redirect...</h1>\n\t<br />\n\t<a href="${encodeURI(url)}">> ${url}</a>\n`;
-							} catch (error) {
+								var url = pdec(para[1]);
+								redirect_to(url.startsWith("//") ? "https:" + url : url);
+							} catch (e) {
 								console.log("Invalid pointer.");
 							}
+							break;
+						case "p":
+							redirect_to("https://www.pixiv.net/artworks/" + para[1]);
 							break;
 						default:
 							console.log("Unknown parameter.");
 					}
 					break;
-				default:
-					console.log("Invalid parameter.");
 			}
 		}
 	}
 }
-hash_redirect();
-window.addEventListener("hashchange", hash_redirect, false);
+hash_func();
+window.addEventListener("hashchange", hash_func, false);
