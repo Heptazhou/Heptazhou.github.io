@@ -1,21 +1,13 @@
-// 读取
-function gethash(str) {
-	var list = str.match(/^#\/*(.*?)\/*$/);
-	if (list != null && list[1] != "") {
-		return list[1].split(/\/+/);
-	} else {
-		return null;
-	}
-}
-
-// 解码
-function pdec(pointer) {
-	while (pointer.length % 4 != 0) pointer += "=";
-	return decodeURI(Base64.decode(pointer));
-}
-
-// 跳转
 function hash_func() {
+	function gethash(str) {
+		var list = str.match(/^#\/*(.*?)\/*$/);
+		if (list != null && list[1] != "") return list[1].split(/\/+/);
+		else return null;
+	}
+	function pdec(pointer) {
+		while (pointer.length % 4 != 0) pointer += "=";
+		return decodeURI(Base64.decode(pointer));
+	}
 	function redirect_to(dest) {
 		console.log(dest);
 		document.body.innerHTML = "";
@@ -27,25 +19,41 @@ function hash_func() {
 		for (var i = 0; i < list.length; i++) {
 			var para = list[i].replace(/=*$/, "").split("=");
 			switch (para.length) {
-				case 1:
-					break;
 				case 2:
+					para[1] = para[1].replace("*", "/");
 					switch (para[0]) {
 						case "url":
 							try {
 								var url = pdec(para[1]);
-								redirect_to(url.startsWith("//") ? "https:" + url : url);
+								redirect_to(url.startsWith("//") ? `https:${url}` : url);
 							} catch (e) {
 								console.log("Invalid pointer.");
 							}
 							break;
+						case "b":
+							redirect_to(`https://b23.tv/${para[1]}`);
+							break;
+						case "g":
+							redirect_to(`https://gelbooru.com/index.php?page=post&s=view&id=${para[1]}`);
+							break;
 						case "p":
-							redirect_to("https://www.pixiv.net/artworks/" + para[1]);
+							redirect_to(`https://www.pixiv.net/artworks/${para[1]}`);
+							break;
+						case "p":
+							redirect_to(`https://www.pixiv.net/artworks/${para[1]}`);
+							break;
+						case "t":
+							redirect_to(`https://twitter.com/_/status/${para[1]}`);
+							break;
+						case "y":
+							redirect_to(`https://yande.re/post/show/${para[1]}`);
 							break;
 						default:
 							console.log("Unknown parameter.");
 					}
 					break;
+				default:
+					console.log("Nothing to do.");
 			}
 		}
 	}

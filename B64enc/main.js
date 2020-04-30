@@ -38,7 +38,7 @@
 						if (s[0] !== "/") s = "//" + s;
 					}
 					s = method(s, option.val()).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_");
-					outurl.val("https://heptazhou.com/&" + s);
+					outurl.val(`heptazhou.com/&${s}`);
 				}
 			} catch (e) {
 				outurl.val(e);
