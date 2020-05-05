@@ -34,18 +34,28 @@ function hash_func() {
 							redirect_to(`https://b23.tv/${para[1]}`);
 							break;
 						case "g":
+						case "gp":
 							redirect_to(`https://gelbooru.com/index.php?page=post&s=view&id=${para[1]}`);
 							break;
-						case "p":
-							redirect_to(`https://www.pixiv.net/artworks/${para[1]}`);
+						case "k":
+						case "kp":
+							redirect_to(`https://konachan.com/post/show/${para[1]}`);
+							break;
+						case "n":
+							redirect_to(`https://www.nicovideo.jp/watch/${para[1]}`);
 							break;
 						case "p":
+						case "pa":
 							redirect_to(`https://www.pixiv.net/artworks/${para[1]}`);
+							break;
+						case "pu":
+							redirect_to(`https://www.pixiv.net/users/${para[1]}`);
 							break;
 						case "t":
 							redirect_to(`https://twitter.com/_/status/${para[1]}`);
 							break;
 						case "y":
+						case "yp":
 							redirect_to(`https://yande.re/post/show/${para[1]}`);
 							break;
 						default:
