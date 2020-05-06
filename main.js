@@ -1,20 +1,20 @@
+function hashsplit(str) {
+	var list = str.match(/^#\/*(.*?)\/*$/);
+	if (list != null && list[1] != "") return list[1].split(/\/+/);
+	else return null;
+}
+function pdec(pointer) {
+	while (pointer.length % 4 != 0) pointer += "=";
+	return decodeURI(Base64.decode(pointer));
+}
+function redirect_to(dest) {
+	console.log(dest);
+	document.body.innerHTML = "";
+	document.body.style = "margin: 2.7rem";
+	document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Click to redirect...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> ${dest}</a>\n`;
+}
 function hash_func() {
-	function gethash(str) {
-		var list = str.match(/^#\/*(.*?)\/*$/);
-		if (list != null && list[1] != "") return list[1].split(/\/+/);
-		else return null;
-	}
-	function pdec(pointer) {
-		while (pointer.length % 4 != 0) pointer += "=";
-		return decodeURI(Base64.decode(pointer));
-	}
-	function redirect_to(dest) {
-		console.log(dest);
-		document.body.innerHTML = "";
-		document.body.style = "margin: 2.7rem";
-		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Click to redirect...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> ${dest}</a>\n`;
-	}
-	var list = gethash(location.hash);
+	var list = hashsplit(location.hash);
 	if (list != null) {
 		for (var i = 0; i < list.length; i++) {
 			var para = list[i].replace(/=*$/, "").split("=");
