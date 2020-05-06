@@ -11,7 +11,8 @@ function redirect_to(dest) {
 	console.log(dest);
 	document.body.innerHTML = "";
 	document.body.style = "margin: 2.7rem";
-	document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Click to redirect...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> ${dest}</a>\n`;
+	document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Redirecting...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> Click here if you are not redirected.</a>\n`;
+	location.replace(dest);
 }
 function hash_func() {
 	var list = hashsplit(location.hash);
@@ -24,8 +25,12 @@ function hash_func() {
 					switch (para[0]) {
 						case "url":
 							try {
-								var url = pdec(para[1]);
-								redirect_to(url.startsWith("//") ? `https:${url}` : url);
+								var dest = pdec(para[1]);
+								if (dest.startsWith("//")) dest = `https:${dest}`;
+								console.log(dest);
+								document.body.innerHTML = "";
+								document.body.style = "margin: 2.7rem";
+								document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Click to redirect...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> ${dest}</a>\n`;
 							} catch (e) {
 								console.log("Invalid pointer.");
 							}
