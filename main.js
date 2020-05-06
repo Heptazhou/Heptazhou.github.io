@@ -57,7 +57,11 @@ function hash_func() {
 							redirect_to(`https://www.pixiv.net/users/${para[1]}`);
 							break;
 						case "t":
-							redirect_to(`https://twitter.com/_/status/${para[1]}`);
+						case "ts":
+							redirect_to(`https://twitter.com/i/status/${para[1]}`);
+							break;
+						case "ti":
+							redirect_to(`https://pbs.twimg.com/media/${para[1]}?format=jpg&name=large`);
 							break;
 						case "y":
 						case "yp":
