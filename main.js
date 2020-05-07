@@ -38,6 +38,13 @@ function hash_func() {
 						case "b":
 							redirect_to(`https://b23.tv/${para[1]}`);
 							break;
+						case "e":
+						case "eg":
+							redirect_to(`https://e-hentai.org/g/${para[1]}`);
+							break;
+						case "es":
+							redirect_to(`https://e-hentai.org/s/${para[1]}`);
+							break;
 						case "g":
 						case "gp":
 							redirect_to(`https://gelbooru.com/index.php?page=post&s=view&id=${para[1]}`);
