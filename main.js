@@ -35,15 +35,15 @@ function hash_func() {
 								console.log("Invalid pointer.");
 							}
 							break;
-						case "b":
-							redirect_to(`https://b23.tv/${para[1]}`);
-							break;
 						case "e":
 						case "eg":
 							redirect_to(`https://e-hentai.org/g/${para[1]}`);
 							break;
 						case "es":
 							redirect_to(`https://e-hentai.org/s/${para[1]}`);
+							break;
+						case "ew":
+							redirect_to(`https://ehwiki.org/index.php?title=Special:Search&fulltext=Search&search=${encodeURIComponent(para[1])}`);
 							break;
 						case "g":
 						case "gp":
