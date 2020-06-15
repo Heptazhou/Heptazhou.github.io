@@ -35,6 +35,8 @@ function hash_func() {
 								console.log("Invalid pointer.");
 							}
 							break;
+						case "b":
+							redirect_to(`https://b23.tv/${para[1]}`);
 						case "e":
 						case "eg":
 							redirect_to(`https://e-hentai.org/g/${para[1]}`);
@@ -56,6 +58,9 @@ function hash_func() {
 						case "n":
 							redirect_to(`https://www.nicovideo.jp/watch/${para[1]}`);
 							break;
+						case "nj":
+							redirect_to(`https://nijie.info/view.php?id=${para[1]}`);
+							break;
 						case "p":
 						case "pa":
 							redirect_to(`https://www.pixiv.net/artworks/${para[1]}`);
@@ -73,6 +78,9 @@ function hash_func() {
 						case "y":
 						case "yp":
 							redirect_to(`https://yande.re/post/show/${para[1]}`);
+							break;
+						case "yt":
+							redirect_to(`https://youtu.be/{para[1]}`);
 							break;
 						default:
 							console.log("Unknown parameter.");

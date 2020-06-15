@@ -1,5 +1,5 @@
 ---
-title: Base64url encode | Heptazhou
+title: URL encode | Heptazhou
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +7,7 @@ title: Base64url encode | Heptazhou
 	<script src="https://src.heptazhou.com/18wggssfgo7e88kbwrbznq40m/jquery.min.js" defer></script>
 	<script src="https://src.heptazhou.com/18wggssfgo7e88kbwrbznq40m/Base64.min.js" defer></script>
 	<script src="main.js" defer></script>
-	<style>textarea{height:20rem}</style>
+	<style>textarea{height:10rem}textarea#input{height:20rem}</style>
 </head>
 <body spellcheck="false">
 	<div><textarea id="input" placeholder="Input"></textarea></div>
@@ -18,7 +18,9 @@ title: Base64url encode | Heptazhou
 		<label for="auto-update">Auto Update</label>
 	</div>
 	<br />
-	<div><textarea id="output" placeholder="Output" readonly></textarea></div>
+	<div><textarea id="output-common" placeholder="Output" readonly></textarea></div>
+	<br />
+	<div><textarea id="output-special" placeholder="Output (special)" readonly></textarea></div>
 	<br />
 	<i>Click the output textarea to copy.</i><br />
 	<br />
