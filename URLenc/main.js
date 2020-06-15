@@ -115,7 +115,6 @@
 						break;
 					case "yande.re":
 						k = "y";
-						redirect_to(`yande.re/post/show/${para[1]}`);
 						v = v.match(/^post\/show\/(.+)/)[1];
 						break;
 					case "youtu.be":
