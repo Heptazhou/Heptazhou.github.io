@@ -21,7 +21,7 @@ function hash_func() {
 			var para = list[i].replace(/=*$/, "").split("=");
 			switch (para.length) {
 				case 2:
-					para[1] = para[1].replace("*", "/");
+					para[1] = para[1].replace(/\*/g, "/");
 					switch (para[0]) {
 						case "url":
 							try {
