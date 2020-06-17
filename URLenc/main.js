@@ -133,7 +133,7 @@
 						k = "";
 				}
 				if (k == "" || v == "") throw "";
-				output2.val(`heptazhou.com/#${k}=${v}`);
+				output2.val(`heptazhou.com/#${k}=${v.replace("*", "%2a").replace("/", "*")}`);
 			} catch (e) {
 				output2.val("");
 			}
