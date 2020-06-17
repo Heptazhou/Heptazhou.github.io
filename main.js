@@ -56,7 +56,13 @@ function hash_func() {
 							redirect_to(`https://konachan.com/post/show/${para[1]}`);
 							break;
 						case "n":
-							redirect_to(`https://www.nicovideo.jp/watch/${para[1]}`);
+							if (para[1].startsWith("sm")) redirect_to(`https://www.nicovideo.jp/watch/${para[1]}`);
+							else if (para[1].startsWith("ch")) redirect_to(`https://ch.nicovideo.jp/channel/${para[1]}`);
+							else if (para[1].startsWith("im")) redirect_to(`https://seiga.nicovideo.jp/seiga/${para[1]}`);
+							else if (para[1].startsWith("lv")) redirect_to(`https://live.nicovideo.jp/watch/${para[1]}`);
+							else if (para[1].startsWith("mg")) redirect_to(`https://seiga.nicovideo.jp/watch/${para[1]}`);
+							else if (para[1].startsWith("nw")) redirect_to(`https://news.nicovideo.jp/watch/${para[1]}`);
+							else if (para[1].startsWith("so")) redirect_to(`https://www.nicovideo.jp/watch/${para[1]}`);
 							break;
 						case "nj":
 							redirect_to(`https://nijie.info/view.php?id=${para[1]}`);

@@ -86,6 +86,15 @@
 						k = "n";
 						v = v.match(/^watch\/(.+)/)[1];
 						break;
+					case "live.nicovideo.jp":
+					case "live2.nicovideo.jp":
+						k = "n";
+						v = v.match(/^watch\/(.+)/)[1];
+						break;
+					case "seiga.nicovideo.jp":
+						k = "n";
+						v = (v.match(/^seiga\/(.+)/) || v.match(/^watch\/(.+)/))[1];
+						break;
 					case "nijie.info":
 						k = "nj";
 						v = v.match(/^view\.php\?(?:.+?&)*id=(\d+)/)[1];
