@@ -16,7 +16,7 @@ function redirect(dest) {
 	}
 	if (quiet === true) {
 		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Redirecting...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> Click here if you are not redirected.</a>\n`;
-		location.hash = location.hash.replace(/^#\/*/, "*/");
+		location.hash = location.hash.replace(/^#\/*/, "#*/");
 		location.href = dest;
 	}
 }
@@ -34,7 +34,6 @@ function hash_func() {
 				switch (para[0]) {
 					case "url":
 						try {
-							quiet = false;
 							s = pdec(s);
 							if (s.startsWith("//")) s = s.replace(/^\/+/, "https://");
 							redirect(s);
