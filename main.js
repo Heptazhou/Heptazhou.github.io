@@ -7,20 +7,18 @@ function pdec(pointer) {
 	while (pointer.length % 4 != 0) pointer += "=";
 	return decodeURI(Base64.decode(pointer));
 }
-function redirect1(dest) {
-	var dest = pdec(dest);
-	if (dest.startsWith("//")) dest = `https:${dest}`;
+function redirect(dest) {
 	console.log(dest);
 	document.body.innerHTML = "";
 	document.body.style = "margin: 2.7rem";
-	document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Click to redirect...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> ${dest}</a>\n`;
-}
-function redirect2(dest) {
-	console.log(dest);
-	document.body.innerHTML = "";
-	document.body.style = "margin: 2.7rem";
-	document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Redirecting...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> Click here if you are not redirected.</a>\n`;
-	location.replace(dest);
+	if (quiet === false) {
+		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Click to redirect...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> ${dest}</a>\n`;
+	}
+	if (quiet === true) {
+		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Redirecting...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> Click here if you are not redirected.</a>\n`;
+		location.hash = location.hash.replace(/^#\/*/, "*/");
+		location.href = dest;
+	}
 }
 function hash_func() {
 	var list = hashsplit(location.hash);
@@ -28,71 +26,78 @@ function hash_func() {
 	for (var i = 0; i < list.length; i++) {
 		var para = list[i].replace(/=*$/, "").split("=");
 		switch (para.length) {
+			case 1:
+				if (para[0] === "*") quiet = false;
+				break;
 			case 2:
-				para[1] = decodeURI(para[1].replace(/\*/g, "/"));
+				var s = decodeURI(para[1].replace(/\*/g, "/"));
 				switch (para[0]) {
 					case "url":
 						try {
-							redirect1(para[1]);
+							quiet = false;
+							s = pdec(s);
+							if (s.startsWith("//")) s = s.replace(/^\/+/, "https://");
+							redirect(s);
 						} catch (e) {
 							console.log("Invalid pointer.");
 						}
 						break;
 					case "b":
-						redirect2(`https://b23.tv/${para[1]}`);
+						redirect(`https://b23.tv/${s}`);
 					case "e":
 					case "eg":
-						redirect2(`https://e-hentai.org/g/${para[1]}`);
+						redirect(`https://e-hentai.org/g/${s}`);
 						break;
 					case "es":
-						redirect2(`https://e-hentai.org/s/${para[1]}`);
+						redirect(`https://e-hentai.org/s/${s}`);
 						break;
 					case "ew":
-						redirect2(`https://ehwiki.org/index.php?title=Special:Search&fulltext=Search&search=${encodeURIComponent(para[1])}`);
+						redirect(`https://ehwiki.org/index.php?title=Special:Search&fulltext=Search&search=${encodeURIComponent(s)}`);
 						break;
 					case "g":
 					case "gp":
-						redirect2(`https://gelbooru.com/index.php?page=post&s=view&id=${para[1]}`);
+						redirect(`https://gelbooru.com/index.php?page=post&s=view&id=${s}`);
 						break;
 					case "k":
 					case "kp":
-						redirect2(`https://konachan.com/post/show/${para[1]}`);
+						redirect(`https://konachan.com/post/show/${s}`);
 						break;
 					case "n":
-						if (para[1].startsWith("sm")) redirect2(`https://www.nicovideo.jp/watch/${para[1]}`);
-						else if (para[1].startsWith("ch")) redirect2(`https://ch.nicovideo.jp/channel/${para[1]}`);
-						else if (para[1].startsWith("im")) redirect2(`https://seiga.nicovideo.jp/seiga/${para[1]}`);
-						else if (para[1].startsWith("lv")) redirect2(`https://live.nicovideo.jp/watch/${para[1]}`);
-						else if (para[1].startsWith("mg")) redirect2(`https://seiga.nicovideo.jp/watch/${para[1]}`);
-						else if (para[1].startsWith("nw")) redirect2(`https://news.nicovideo.jp/watch/${para[1]}`);
-						else if (para[1].startsWith("so")) redirect2(`https://www.nicovideo.jp/watch/${para[1]}`);
+						if (0);
+						else if (s.startsWith("sm")) redirect(`https://www.nicovideo.jp/watch/${s}`);
+						else if (s.startsWith("ch")) redirect(`https://ch.nicovideo.jp/channel/${s}`);
+						else if (s.startsWith("im")) redirect(`https://seiga.nicovideo.jp/seiga/${s}`);
+						else if (s.startsWith("lv")) redirect(`https://live.nicovideo.jp/watch/${s}`);
+						else if (s.startsWith("mg")) redirect(`https://seiga.nicovideo.jp/watch/${s}`);
+						else if (s.startsWith("nw")) redirect(`https://news.nicovideo.jp/watch/${s}`);
+						else if (s.startsWith("so")) redirect(`https://www.nicovideo.jp/watch/${s}`);
 						break;
 					case "nj":
-						redirect2(`https://nijie.info/view.php?id=${para[1]}`);
+						redirect(`https://nijie.info/view.php?id=${s}`);
 						break;
 					case "p":
 					case "pa":
-						redirect2(`https://www.pixiv.net/artworks/${para[1]}`);
+						redirect(`https://www.pixiv.net/artworks/${s}`);
 						break;
 					case "pu":
-						redirect2(`https://www.pixiv.net/users/${para[1]}`);
+						redirect(`https://www.pixiv.net/users/${s}`);
 						break;
 					case "t":
 					case "ts":
-						redirect2(`https://twitter.com/i/status/${para[1]}`);
+						redirect(`https://twitter.com/i/status/${s}`);
 						break;
 					case "ti":
-						redirect2(`https://pbs.twimg.com/media/${para[1]}?format=jpg&name=large`);
+						redirect(`https://pbs.twimg.com/media/${s}?format=jpg&name=large`);
 						break;
 					case "w":
-						redirect2(`https://m.weibo.cn/status/${para[1]}`);
+						redirect(`https://m.weibo.cn/status/${s}`);
 						break;
 					case "y":
 					case "yp":
-						redirect2(`https://yande.re/post/show/${para[1]}`);
+						redirect(`https://yande.re/post/show/${s}`);
 						break;
 					case "yt":
-						redirect2(`https://youtu.be/{para[1]}`);
+						redirect(`https://youtu.be/${s}`);
 						break;
 					default:
 						console.log("Unknown parameter.");
@@ -103,5 +108,6 @@ function hash_func() {
 		}
 	}
 }
+var quiet = true;
 hash_func();
 window.addEventListener("hashchange", hash_func, false);
