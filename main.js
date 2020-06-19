@@ -43,6 +43,7 @@ function hash_func() {
 						break;
 					case "b":
 						redirect(`https://b23.tv/${s}`);
+						break;
 					case "e":
 					case "eg":
 						redirect(`https://e-hentai.org/g/${s}`);
