@@ -19,18 +19,65 @@
 		var output2 = $("#output-special");
 		var checkbox = $("#auto-update");
 		var option = $("[data-option]");
+		/* https://github.com/the1812/Bilibili-Evolved/blob/master/min/url-params-clean.min.js */
+		function cleanurl(z) {
+			const a = [
+				"__cf_chl_captcha_tk__",
+				"__cf_chl_jschl_tk__",
+				"accept_quality",
+				"bbid",
+				"broadcast_type",
+				"current_qn",
+				"current_quality",
+				"from_source",
+				"from_spmid",
+				"from",
+				"network_status",
+				"network",
+				"platform_network_status",
+				"playurl_h264",
+				"playurl_h265",
+				"quality_description",
+				"rt",
+				"seid",
+				"session_id",
+				"share_medium",
+				"share_plat",
+				"share_source",
+				"share_tag",
+				"spm_id_from",
+				"tdsourcetag",
+				"timestamp",
+				"ts",
+				"unique_k",
+				"utm_campaign",
+				"utm_medium",
+				"utm_source",
+				"visit_id",
+			];
+			const b = (i) => i;
+			const c = z.replace(/^.+?(\?.+)$/, "$1");
+			const d = c.substring(1).split("&");
+			const e = d.filter((j) => (a.some((k) => j.startsWith(`${k}=`)) ? false : true));
+			const f = e.join("&");
+			const g = b(z.replace(c, ""));
+			const h = f ? "?" + f : "";
+			return g + h;
+		}
 		var execute = function () {
 			try {
 				var s = input.val().trim();
-				if (s === "") output1.val("");
+				var t = cleanurl(s);
+				if (s != "" && s !== t) input.val(t);
+			} catch (e) {}
+			try {
+				var s = input.val().trim();
+				if (s == "") output1.val("");
 				else {
 					s = decodeURIComponent(s);
 					// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
-					if (/^[a-z][a-z0-9+.-]*:.+$/i.test(s)) {
-						s = s.replace(/^https:(?=\/\/.+$)/i, "");
-					} else {
-						if (s[0] !== "/") s = "//" + s;
-					}
+					if (/^[a-z][a-z0-9+.-]*:.+$/i.test(s)) s = s.replace(/^https:(?=\/\/.+$)/i, "");
+					else if (s[0] !== "/") s = "//" + s;
 					s = method(s, option.val()).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_");
 					output1.val(`heptazhou.com/&${s}`);
 				}
@@ -39,7 +86,7 @@
 			}
 			try {
 				var s = input.val().trim();
-				if (s === "") throw "";
+				if (s == "") throw "";
 				s = decodeURIComponent(s);
 				// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
 				if (/^[a-z][a-z0-9+.-]*:.+$/i.test(s)) {
