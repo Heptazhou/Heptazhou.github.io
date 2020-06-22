@@ -56,7 +56,7 @@
 				"visit_id",
 			];
 			const b = (i) => i;
-			const c = z.replace(/^.+?(\?.+)$/, "$1");
+			const c = z.match(/(?:\?.+)?$/)[0];
 			const d = c.substring(1).split("&");
 			const e = d.filter((j) => (a.some((k) => j.startsWith(`${k}=`)) ? false : true));
 			const f = e.join("&");
