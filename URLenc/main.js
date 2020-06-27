@@ -154,10 +154,10 @@
 						k = "b"
 						break
 					case "e-hentai.org":
-						s = v.match(/^(.+?)\/(.+)$/)
+						s = v.match(/^(.+?)\/(.+)\/*$/)
 						switch (s[1]) {
 							case "g":
-								k = "eg"
+								k = "e"
 								break
 							case "s":
 								k = "es"
