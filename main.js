@@ -72,6 +72,9 @@ function hash_func() {
 						else if (s.startsWith("nw")) redirect(`https://news.nicovideo.jp/watch/${s}`)
 						else if (s.startsWith("so")) redirect(`https://www.nicovideo.jp/watch/${s}`)
 						break
+					case "nh":
+						redirect(`https://nhentai.net/g/${s}`)
+						break
 					case "nj":
 						redirect(`https://nijie.info/view.php?id=${s}`)
 						break

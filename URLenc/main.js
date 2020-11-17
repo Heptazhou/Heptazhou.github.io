@@ -104,6 +104,17 @@
 						k = "n"
 						v = (v.match(/^seiga\/(.+)/) || v.match(/^watch\/(.+)/))[1]
 						break
+					case "nhentai.net":
+						s = v.match(/^(.+?)\/+(.+?)\/*$/)
+						switch (s[1]) {
+							case "g":
+								k = "nh"
+								break
+							default:
+								k = ""
+						}
+						v = s[2]
+						break
 					case "nijie.info":
 						k = "nj"
 						v = v.match(/^view\.php\?(?:.+?&)*id=(\d+)/)[1]
