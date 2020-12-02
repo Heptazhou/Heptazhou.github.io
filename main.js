@@ -11,13 +11,13 @@ function redirect(dest) {
 	console.log(dest)
 	document.body.innerHTML = ""
 	document.body.style = "margin: 2.7rem"
-	if (quiet === false) {
+	if (silent === false) {
 		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Click to redirect...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> ${dest}</a>\n`
 	}
-	if (quiet === true) {
-		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Redirecting...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> Click here if you are not redirected.</a>\n`
-		location.hash = location.hash.replace(/^#\/*/, "#*/")
+	if (silent === true) {
+		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Redirecting...</h1>\n\t<br />\n`
 		location.href = dest
+		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Redirecting...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> Click here if you are not redirected.</a>\n`
 	}
 }
 function hash_func() {
@@ -26,11 +26,12 @@ function hash_func() {
 	for (var i = 0; i < list.length; i++) {
 		var para = list[i].replace(/=*$/, "").split("=")
 		switch (para.length) {
-			case 1:
-				if (para[0] === "*") quiet = false
-				break
 			case 2:
 				var s = decodeURI(para[1].replace(/\*/g, "/"))
+				if (s.startsWith("&")) {
+					silent = true
+					s = s.replace(/^&+/, "")
+				}
 				switch (para[0]) {
 					case "url":
 						try {
@@ -111,6 +112,6 @@ function hash_func() {
 		}
 	}
 }
-var quiet = true
+var silent = true
 hash_func()
 window.addEventListener("hashchange", hash_func, false)
