@@ -44,6 +44,9 @@ function hash_func() {
 							redirect(s)
 						} catch (e) {
 							console.log("Invalid pointer.")
+							document.body.innerHTML = ""
+							document.body.style = "margin: 2.7rem"
+							document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Invalid argument</h1>\n\t<br />\n\tPlease check again.\n`
 						}
 						break
 					case "b":
