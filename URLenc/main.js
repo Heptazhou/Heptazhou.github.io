@@ -18,7 +18,6 @@
 		var output1 = $("#output-common")
 		var output2 = $("#output-special")
 		var checkbox = $("#auto-update")
-		var option = $("[data-option]")
 		/* https://github.com/the1812/Bilibili-Evolved/blob/master/min/url-params-clean.min.js */
 		function cleanurl(z) {
 			const a = ["__cf_chl_captcha_tk__", "__cf_chl_jschl_tk__", "_ff", "accept_quality", "adpicid", "amp", "bar", "bbid", "bddid", "bdtype", "broadcast_type", "cg", "ch", "cid", "client", "cs", "ct", "current_qn", "current_quality", "di", "euri", "f", "fm", "fr", "from_source", "from_spmid", "from", "fromurl", "gsm", "hs", "inputT", "ipn", "is_reflow", "is", "isappinstalled", "islist", "lm", "ln", "lpn", "network_status", "network", "oq", "oriquery", "os", "pid", "platform_network_status", "playurl_h264", "playurl_h265", "pn", "prefixsug", "puid", "quality_description", "querylist", "rand", "rn", "rsp", "rsv_bp", "rsv_btype", "rsv_cq", "rsv_dl", "rsv_enter", "rsv_pq", "rsv_spt", "rsv_t", "rt", "seid", "session_id", "share_medium", "share_plat", "share_source", "share_tag", "simid", "sme", "spm_id_from", "spn", "src", "tdsourcetag", "timestamp", "tn", "ts", "unique_k", "usm", "utm_campaign", "utm_medium", "utm_source", "visit_id", "weibo_id", "wfr", "z"]
@@ -46,7 +45,7 @@
 					if (/^[a-z][a-z0-9+.-]*:.+$/i.test(s)) s = s.replace(/^https:(?=\/\/.+$)/i, "")
 					else if (s[0] !== "/") s = "//" + s
 					if (silent == true) s = "*" + s
-					s = method(s, option.val()).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_")
+					s = method(s).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_")
 					output1.val(`heptazhou.com/&${s}`)
 				}
 			} catch (e) {
@@ -179,7 +178,6 @@
 		}
 		if (checkbox.length > 0) {
 			input.bind("input propertychange", autoUpdate)
-			option.bind("input propertychange", autoUpdate)
 			checkbox.click(autoUpdate)
 		}
 		$("#execute").click(execute)

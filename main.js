@@ -8,16 +8,15 @@ function pdec(pointer) {
 	return decodeURI(Base64.decode(pointer))
 }
 function redirect(dest) {
-	console.log(dest)
 	document.body.innerHTML = ""
 	document.body.style = "margin: 2.7rem"
+	console.log(Base64.encode(dest).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_"))
 	if (silent === false) {
 		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Click to redirect...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> ${dest}</a>\n`
 	}
 	if (silent === true) {
-		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Redirecting...</h1>\n\t<br />\n`
 		location.href = dest
-		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Redirecting...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> Click here if you are not redirected.</a>\n`
+		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Redirecting...</h1>\n\t<br />\n\t<a href="javascript:;" onclick="hash_func()">> Click to retry if needed.</a>\n`
 	}
 }
 function hash_func() {
