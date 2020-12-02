@@ -45,7 +45,7 @@
 					// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
 					if (/^[a-z][a-z0-9+.-]*:.+$/i.test(s)) s = s.replace(/^https:(?=\/\/.+$)/i, "")
 					else if (s[0] !== "/") s = "//" + s
-					if (silent == true) s = "&" + s
+					if (silent == true) s = "*" + s
 					s = method(s, option.val()).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_")
 					output1.val(`heptazhou.com/&${s}`)
 				}
