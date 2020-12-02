@@ -37,6 +37,10 @@ function hash_func() {
 					case "url":
 						try {
 							s = pdec(s)
+							if (s.startsWith("*")) {
+								silent = true
+								s = s.replace(/^\*+/, "")
+							}
 							if (s.startsWith("//")) s = s.replace(/^\/+/, "https://")
 							redirect(s)
 						} catch (e) {
