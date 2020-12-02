@@ -33,13 +33,19 @@
 		}
 		var execute = function () {
 			try {
-				var s = input.val().trim()
+				var s = decodeURIComponent(input.val()).trim()
 				if (s == "") output1.val("")
 				else {
-					s = decodeURIComponent(s)
+					if (s.startsWith("*")) {
+						var silent = true
+						s = s.replace(/^\*+/, "")
+					} else {
+						var silent = false
+					}
 					// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
 					if (/^[a-z][a-z0-9+.-]*:.+$/i.test(s)) s = s.replace(/^https:(?=\/\/.+$)/i, "")
 					else if (s[0] !== "/") s = "//" + s
+					if (silent == true) s = "&" + s
 					s = method(s, option.val()).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_")
 					output1.val(`heptazhou.com/&${s}`)
 				}
@@ -47,113 +53,122 @@
 				output1.val(e)
 			}
 			try {
-				var s = cleanurl(input.val().trim())
-				if (s == "") throw ""
-				s = decodeURIComponent(s)
-				// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
-				if (/^[a-z][a-z0-9+.-]*:.+$/i.test(s)) {
-					if (!/^https?:\/\/.+$/i.test(s)) throw ""
-					s = s.replace(/^https?:\/+/i, "")
-				} else {
-					if (s[0] === "/" && !/^\/\/.+$/i.test(s)) throw ""
-					s = s.replace(/^\/+/, "")
+				var s = cleanurl(decodeURIComponent(input.val()).trim())
+				if (s == "") output1.val("")
+				else {
+					if (s.startsWith("*")) {
+						var silent = true
+						s = s.replace(/^\*+/, "")
+					} else {
+						var silent = false
+					}
+					// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
+					if (/^[a-z][a-z0-9+.-]*:.+$/i.test(s)) {
+						if (!/^https?:\/{2,}[^\/]/i.test(s)) throw ""
+						s = s.replace(/^https?:\/+/i, "")
+					} else {
+						if (s[0] === "/" && !/^\/{2,}[^\/]/i.test(s)) throw ""
+						s = s.replace(/^\/+/, "")
+					}
+					var k = s.match(/^(.+?)\//)[1]
+					var v = s.match(/^.+?\/(.+)$/)[1]
+					switch (k) {
+						case "b23.tv":
+							k = "b"
+							break
+						case "e-hentai.org":
+							s = v.match(/^(.+?)\/+(.+?)\/*$/)
+							switch (s[1]) {
+								case "g":
+									k = "e"
+									break
+								case "s":
+									k = "es"
+									break
+								default:
+									k = ""
+							}
+							v = s[2]
+							break
+						case "ehwiki.org":
+							k = "ew"
+							v = v.match(/^index\.php\?(?:.+?&)*search=([^&]+)/)[1]
+							break
+						case "gelbooru.com":
+							k = "g"
+							v = v.match(/^index\.php\?(?:.+?&)*id=(\d+)/)[1]
+							break
+						case "konachan.com":
+							k = "k"
+							v = v.match(/^post\/show\/(.+)/)[1]
+							break
+						case "nicovideo.jp":
+						case "www.nicovideo.jp":
+							k = "n"
+							v = v.match(/^watch\/(.+)/)[1]
+							break
+						case "live.nicovideo.jp":
+						case "live2.nicovideo.jp":
+							k = "n"
+							v = v.match(/^watch\/(.+)/)[1]
+							break
+						case "seiga.nicovideo.jp":
+							k = "n"
+							v = (v.match(/^seiga\/(.+)/) || v.match(/^watch\/(.+)/))[1]
+							break
+						case "nhentai.net":
+							s = v.match(/^(.+?)\/+(.+?)\/*$/)
+							switch (s[1]) {
+								case "g":
+									k = "nh"
+									break
+								default:
+									k = ""
+							}
+							v = s[2]
+							break
+						case "nijie.info":
+							k = "nj"
+							v = v.match(/^view\.php\?(?:.+?&)*id=(\d+)/)[1]
+							break
+						case "pixiv.net":
+						case "www.pixiv.net":
+							s = v.match(/^(.+?)\/(.+)$/)
+							switch (s[1]) {
+								case "artworks":
+									k = "p"
+									break
+								case "users":
+									k = "pu"
+									break
+								default:
+									k = ""
+							}
+							v = s[2]
+							break
+						case "twitter.com":
+							k = "t"
+							v = v.match(/^.+?\/status\/(.+)$/)[1]
+							break
+						case "pbs.twimg.com":
+							k = "ti"
+							v = v.match(/^media\/([^?]+)/)[1]
+							break
+						case "yande.re":
+							k = "y"
+							v = v.match(/^post\/show\/(.+)/)[1]
+							break
+						case "youtu.be":
+							k = "yt"
+							break
+						default:
+							k = ""
+					}
+					if (k == "" || v == "") throw ""
+					v = v.replace(/\*/g, "%2a").replace(/\//g, "*")
+					if (silent == true) v = "*" + v
+					output2.val(`heptazhou.com/#${k}=${v}`)
 				}
-				var k = s.match(/^(.+?)\//)[1]
-				var v = s.match(/^.+?\/(.+)$/)[1]
-				switch (k) {
-					case "b23.tv":
-						k = "b"
-						break
-					case "e-hentai.org":
-						s = v.match(/^(.+?)\/+(.+?)\/*$/)
-						switch (s[1]) {
-							case "g":
-								k = "e"
-								break
-							case "s":
-								k = "es"
-								break
-							default:
-								k = ""
-						}
-						v = s[2]
-						break
-					case "ehwiki.org":
-						k = "ew"
-						v = v.match(/^index\.php\?(?:.+?&)*search=([^&]+)/)[1]
-						break
-					case "gelbooru.com":
-						k = "g"
-						v = v.match(/^index\.php\?(?:.+?&)*id=(\d+)/)[1]
-						break
-					case "konachan.com":
-						k = "k"
-						v = v.match(/^post\/show\/(.+)/)[1]
-						break
-					case "nicovideo.jp":
-					case "www.nicovideo.jp":
-						k = "n"
-						v = v.match(/^watch\/(.+)/)[1]
-						break
-					case "live.nicovideo.jp":
-					case "live2.nicovideo.jp":
-						k = "n"
-						v = v.match(/^watch\/(.+)/)[1]
-						break
-					case "seiga.nicovideo.jp":
-						k = "n"
-						v = (v.match(/^seiga\/(.+)/) || v.match(/^watch\/(.+)/))[1]
-						break
-					case "nhentai.net":
-						s = v.match(/^(.+?)\/+(.+?)\/*$/)
-						switch (s[1]) {
-							case "g":
-								k = "nh"
-								break
-							default:
-								k = ""
-						}
-						v = s[2]
-						break
-					case "nijie.info":
-						k = "nj"
-						v = v.match(/^view\.php\?(?:.+?&)*id=(\d+)/)[1]
-						break
-					case "pixiv.net":
-					case "www.pixiv.net":
-						s = v.match(/^(.+?)\/(.+)$/)
-						switch (s[1]) {
-							case "artworks":
-								k = "p"
-								break
-							case "users":
-								k = "pu"
-								break
-							default:
-								k = ""
-						}
-						v = s[2]
-						break
-					case "twitter.com":
-						k = "t"
-						v = v.match(/^.+?\/status\/(.+)$/)[1]
-						break
-					case "pbs.twimg.com":
-						k = "ti"
-						v = v.match(/^media\/([^?]+)/)[1]
-						break
-					case "yande.re":
-						k = "y"
-						v = v.match(/^post\/show\/(.+)/)[1]
-						break
-					case "youtu.be":
-						k = "yt"
-						break
-					default:
-						k = ""
-				}
-				if (k == "" || v == "") throw ""
-				output2.val(`heptazhou.com/#${k}=${v.replace(/\*/g, "%2a").replace(/\//g, "*")}`)
 			} catch (e) {
 				output2.val("")
 			}

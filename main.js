@@ -27,11 +27,12 @@ function hash_func() {
 		var para = list[i].replace(/=*$/, "").split("=")
 		switch (para.length) {
 			case 2:
-				var s = decodeURI(para[1].replace(/\*/g, "/"))
-				if (s.startsWith("&")) {
+				var s = para[1]
+				if (s.startsWith("*")) {
 					silent = true
-					s = s.replace(/^&+/, "")
+					s = s.replace(/^\*+/, "")
 				}
+				s = decodeURI(s.replace(/\*/g, "/"))
 				switch (para[0]) {
 					case "url":
 						try {
@@ -112,6 +113,6 @@ function hash_func() {
 		}
 	}
 }
-var silent = true
+var silent = false
 hash_func()
 window.addEventListener("hashchange", hash_func, false)
