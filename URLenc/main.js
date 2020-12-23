@@ -20,7 +20,7 @@
 		var checkbox = $("#auto-update")
 		/* https://github.com/the1812/Bilibili-Evolved/blob/master/min/url-params-clean.min.js */
 		function cleanurl(z) {
-			const a = ["__cf_chl_captcha_tk__", "__cf_chl_jschl_tk__", "_ff", "accept_quality", "adpicid", "amp", "bar", "bbid", "bddid", "bdtype", "broadcast_type", "cg", "ch", "cid", "client", "cs", "ct", "current_qn", "current_quality", "di", "euri", "f", "fm", "fr", "from_source", "from_spmid", "from", "fromurl", "gsm", "hs", "inputT", "ipn", "is_reflow", "is", "isappinstalled", "islist", "issp", "lm", "ln", "lpn", "network_status", "network", "oq", "oriquery", "os", "pid", "platform_network_status", "playurl_h264", "playurl_h265", "pn", "prefixsug", "puid", "quality_description", "querylist", "rand", "rn", "rsf", "rsp", "rsv_bp", "rsv_btype", "rsv_cq", "rsv_dl", "rsv_enter", "rsv_idx", "rsv_iqid", "rsv_pq", "rsv_spt", "rsv_t", "rt", "seid", "session_id", "share_medium", "share_plat", "share_source", "share_tag", "simid", "sme", "spm_id_from", "spn", "src", "tdsourcetag", "timestamp", "tn", "ts", "unique_k", "usm", "utm_campaign", "utm_medium", "utm_source", "utm_term", "visit_id", "weibo_id", "wfr", "z"]
+			const a = ["__cf_chl_captcha_tk__", "__cf_chl_jschl_tk__", "_ff", "_ts", "accept_quality", "ad_od", "adpicid", "amp", "bar", "bbid", "bddid", "bdtype", "broadcast_type", "bsource", "cg", "ch", "cid", "client", "cs", "ct", "current_qn", "current_quality", "di", "dm_progress", "dmid", "euri", "f", "fm", "fr", "from_source", "from_spmid", "from", "fromurl", "gsm", "gx", "hs", "inputT", "ipn", "is_reflow", "is", "isappinstalled", "islist", "issp", "lm", "ln", "lpn", "network_status", "network", "oq", "oriquery", "os", "p2p_type", "pid", "platform_network_status", "playurl_h264", "playurl_h265", "pn", "prefixsug", "puid", "quality_description", "querylist", "rand", "referfrom", "rn", "rsf", "rsp", "rsv_bp", "rsv_btype", "rsv_cq", "rsv_dl", "rsv_enter", "rsv_idx", "rsv_iqid", "rsv_pq", "rsv_spt", "rsv_t", "rt", "seid", "session_id", "share_medium", "share_plat", "share_source", "share_tag", "simid", "sme", "spm_id_from", "spn", "src", "tdsourcetag", "timestamp", "tn", "ts", "unique_k", "usm", "utm_campaign", "utm_medium", "utm_source", "utm_term", "utm_user", "visit_id", "weibo_id", "wfr", "wxa_abtest", "z"]
 			const b = (i) => i
 			const c = z.match(/(?:\?.+)?$/)[0]
 			const d = c.substring(1).split("&")
@@ -53,7 +53,7 @@
 			}
 			try {
 				var s = cleanurl(decodeURIComponent(input.val()).trim())
-				if (s == "") output1.val("")
+				if (s == "") output2.val("")
 				else {
 					if (s.startsWith("*")) {
 						var silent = true
