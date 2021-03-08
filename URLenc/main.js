@@ -146,6 +146,7 @@
 							v = s[2]
 							break
 						case "twitter.com":
+						case "mobile.twitter.com":
 							k = "t"
 							v = v.match(/^.+?\/status\/(.+)$/)[1]
 							break
@@ -165,8 +166,7 @@
 					}
 					if (k == "" || v == "") throw ""
 					v = v.replace(/\*/g, "%2a").replace(/\//g, "*")
-					if (silent == true) v = "*" + v
-					output2.val(`heptazhou.com/#${k}=${v}`)
+					output2.val(`heptazhou.com/#${k}=*${v}`)
 				}
 			} catch (e) {
 				output2.val("")
