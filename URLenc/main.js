@@ -20,7 +20,7 @@
 		var checkbox = $("#auto-update")
 		/* https://github.com/the1812/Bilibili-Evolved/blob/master/min/url-params-clean.min.js */
 		function cleanurl(z) {
-			const a = ["__cf_chl_captcha_tk__", "__cf_chl_jschl_tk__", "_ff", "_ts", "ab_channel", "accept_quality", "ad_od", "adpicid", "amp", "bar", "bbid", "bddid", "bdtype", "broadcast_type", "bsource", "bu", "cg", "ch", "cid", "client", "cs", "ct", "current_qn", "current_quality", "di", "display", "dm_progress", "dmid", "euri", "expiration", "f", "feature", "fm", "fr", "from_source", "from_spmid", "from", "fromid", "fromtitle", "fromurl", "gsm", "gx", "hs", "inputT", "ipn", "is_reflow", "is", "isappinstalled", "islist", "issp", "jid", "lm", "ln", "lpn", "msource", "network_status", "network", "oq", "oriquery", "os", "p2p_type", "pid", "platform_network_status", "playurl_h264", "playurl_h265", "pn", "prefixsug", "puid", "quality_description", "querylist", "rand", "ref_src", "ref_url", "referfrom", "retcode", "rn", "rsf", "rsp", "rsv_bp", "rsv_btype", "rsv_cq", "rsv_dl", "rsv_enter", "rsv_idx", "rsv_iqid", "rsv_pq", "rsv_spt", "rsv_t", "rt", "s", "seid", "session_id", "share_medium", "share_plat", "share_source", "share_tag", "simid", "sme", "source", "sourceFrom", "spm_id_from", "spn", "src", "tdsourcetag", "timestamp", "tn", "ts", "unique_k", "usm", "utm_campaign", "utm_medium", "utm_source", "utm_term", "utm_user", "v", "visit_id", "weibo_id", "wfr", "wxa_abtest", "z"]
+			const a = ["__cf_chl_captcha_tk__", "__cf_chl_jschl_tk__", "_ff", "_ts", "ab_channel", "accept_quality", "ad_od", "adpicid", "amp", "bar", "bbid", "bddid", "bdtype", "broadcast_type", "bsource", "bu", "cg", "ch", "cid", "client", "cs", "ct", "current_qn", "current_quality", "di", "display", "dm_progress", "dmid", "euri", "expiration", "f", "feature", "fm", "fr", "from_source", "from_spmid", "from", "fromid", "fromtitle", "fromurl", "gsm", "gx", "hs", "inputT", "ipn", "is_reflow", "is", "isappinstalled", "islist", "issp", "jid", "lm", "ln", "lpn", "mpshare", "msource", "network_status", "network", "oq", "oriquery", "os", "p2p_type", "pid", "platform_network_status", "playurl_h264", "playurl_h265", "pn", "prefixsug", "puid", "quality_description", "querylist", "rand", "ref_src", "ref_url", "referfrom", "retcode", "rn", "rsf", "rsp", "rsv_bp", "rsv_btype", "rsv_cq", "rsv_dl", "rsv_enter", "rsv_idx", "rsv_iqid", "rsv_pq", "rsv_spt", "rsv_t", "rt", "s", "scene", "seid", "session_id", "share_medium", "share_plat", "share_source", "share_tag", "sharer_shareid", "sharer_sharetime", "simid", "sme", "source", "sourceFrom", "spm_id_from", "spn", "src", "srcid", "tdsourcetag", "timestamp", "tn", "ts", "unique_k", "usm", "utm_campaign", "utm_medium", "utm_source", "utm_term", "utm_user", "v", "visit_id", "weibo_id", "wfr", "wxa_abtest", "z"]
 			const b = (i) => i
 			const c = z.match(/(?:\?.+)?$/)[0]
 			const d = c.substring(1).split("&")
@@ -66,7 +66,7 @@
 						if (!/^https?:\/{2,}[^\/]/i.test(s)) throw ""
 						s = s.replace(/^https?:\/+/i, "")
 					} else {
-						if (s[0] === "/" && !/^\/{2,}[^\/]/i.test(s)) throw ""
+						if (s[0] == "/" && !/^\/{2,}[^\/]/i.test(s)) throw ""
 						s = s.replace(/^\/+/, "")
 					}
 					var k = s.match(/^(.+?)\//)[1]
