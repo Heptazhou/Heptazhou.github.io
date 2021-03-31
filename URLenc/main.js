@@ -43,7 +43,7 @@
 					}
 					// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
 					if (/^[a-z][a-z0-9+.-]*:.+$/i.test(s)) s = s.replace(/^https:(?=\/\/.+$)/i, "")
-					else if (s[0] !== "/") s = "//" + s
+					else if (s[0] != "/") s = "//" + s
 					if (silent == true) s = "*" + s
 					s = method(s).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_")
 					output1.val(`heptazhou.com/&${s}`)
@@ -69,16 +69,18 @@
 						if (s[0] == "/" && !/^\/{2,}[^\/]/i.test(s)) throw ""
 						s = s.replace(/^\/+/, "")
 					}
+					s = s.replace(/\/{2,}/g, "/")
 					var k = s.match(/^(.+?)\//)[1]
 					var v = s.match(/^.+?\/(.+)$/)[1]
 					switch (k) {
+						case "bilibili.com":
 						case "www.bilibili.com":
-							v = v.match(/^(?:bangumi\/play|video)\/(.+)/)[1]
+							v = (v.match(/^(?:bangumi\/play|video)\/(.+)/) || v.match(/^(av\d+.*)/))[1]
 						case "b23.tv":
 							k = "b"
 							break
 						case "e-hentai.org":
-							s = v.match(/^(.+?)\/+(.+?)\/*$/)
+							s = v.match(/^(.+?)\/(.+?)\/*$/)
 							switch (s[1]) {
 								case "g":
 									k = "e"
@@ -118,15 +120,9 @@
 							v = (v.match(/^seiga\/(.+)/) || v.match(/^watch\/(.+)/))[1]
 							break
 						case "nhentai.net":
-							s = v.match(/^(.+?)\/+(.+?)\/*$/)
-							switch (s[1]) {
-								case "g":
-									k = "nh"
-									break
-								default:
-									k = ""
-							}
-							v = s[2]
+							s = v.match(/^g\/(.+?)\/*$/)
+							k = "nh"
+							v = s[1]
 							break
 						case "nijie.info":
 							k = "nj"
