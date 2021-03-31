@@ -57,6 +57,12 @@ function hash_func() {
 					else if (v.match(/^ss/)) redirect(`https://www.bilibili.com/bangumi/play/${v}`)
 					else redirect(`https://www.bilibili.com/${v}`)
 					break
+				case "bu":
+					redirect(`https://space.bilibili.com/${v}`)
+					break
+				case "bv":
+					redirect(`https://www.bilibili.com/video/av${v}`)
+					break
 				case "e":
 				case "eg":
 					redirect(`https://e-hentai.org/g/${v}`)

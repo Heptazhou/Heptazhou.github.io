@@ -42,7 +42,7 @@
 						var silent = false
 					}
 					// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
-					if (/^[a-z][a-z0-9+.-]*:.+$/i.test(s)) s = s.replace(/^https:(?=\/\/.+$)/i, "")
+					if (/^[a-z][a-z0-9+.-]*:.+/i.test(s)) s = s.replace(/^https:(?=\/\/.+)/i, "")
 					else if (s[0] != "/") s = "//" + s
 					if (silent == true) s = "*" + s
 					s = method(s).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_")
@@ -62,7 +62,7 @@
 						var silent = false
 					}
 					// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
-					if (/^[a-z][a-z0-9+.-]*:.+$/i.test(s)) {
+					if (/^[a-z][a-z0-9+.-]*:.+/i.test(s)) {
 						if (!/^https?:\/{2,}[^\/]/i.test(s)) throw ""
 						s = s.replace(/^https?:\/+/i, "")
 					} else {
@@ -71,12 +71,17 @@
 					}
 					s = s.replace(/\/{2,}/g, "/")
 					var k = s.match(/^(.+?)\//)[1]
-					var v = s.match(/^.+?\/(.+)$/)[1]
+					var v = s.match(/^.+?\/(.+)/)[1]
 					switch (k) {
 						case "bilibili.com":
 						case "www.bilibili.com":
 							v = (v.match(/^(?:audio|bangumi\/(?:media|play)|video)\/(.+)/) || v.match(/^(av\d+.*)/))[1]
 						case "b23.tv":
+							if ((s = v.match(/^av(\d+.*)/))) {
+								v = s[1]
+								k = "bv"
+								break
+							}
 							k = "b"
 							break
 						case "space.bilibili.com":
@@ -133,7 +138,7 @@
 							break
 						case "pixiv.net":
 						case "www.pixiv.net":
-							s = v.match(/^(.+?)\/(.+)$/)
+							s = v.match(/^(.+?)\/(.+)/)
 							switch (s[1]) {
 								case "artworks":
 									k = "p"
@@ -149,7 +154,7 @@
 						case "twitter.com":
 						case "mobile.twitter.com":
 							k = "t"
-							v = v.match(/^.+?\/status\/(.+)$/)[1]
+							v = v.match(/^.+?\/status\/(.+)/)[1]
 							break
 						case "pbs.twimg.com":
 							k = "ti"
