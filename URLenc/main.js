@@ -75,9 +75,12 @@
 					switch (k) {
 						case "bilibili.com":
 						case "www.bilibili.com":
-							v = (v.match(/^(?:bangumi\/play|video)\/(.+)/) || v.match(/^(av\d+.*)/))[1]
+							v = (v.match(/^(?:audio|bangumi\/(?:media|play)|video)\/(.+)/) || v.match(/^(av\d+.*)/))[1]
 						case "b23.tv":
 							k = "b"
+							break
+						case "space.bilibili.com":
+							k = "bu"
 							break
 						case "e-hentai.org":
 							s = v.match(/^(.+?)\/(.+?)\/*$/)

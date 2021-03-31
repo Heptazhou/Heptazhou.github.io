@@ -23,99 +23,103 @@ function hash_func() {
 	var list = hashsplit(location.hash)
 	if (list == null) return null
 	for (var i = 0; i < list.length; i++) {
-		var para = list[i].replace(/=*$/, "").split("=")
-		switch (para.length) {
-			case 2:
-				var s = para[1]
-				if (s.startsWith("*")) {
-					silent = true
-					s = s.replace(/^\*+/, "")
-				}
-				s = decodeURI(s.replace(/\*/g, "/"))
-				switch (para[0]) {
-					case "url":
-						try {
-							s = pdec(s)
-							if (s.startsWith("*")) {
-								silent = true
-								s = s.replace(/^\*+/, "")
-							}
-							if (s.startsWith("//")) s = s.replace(/^\/+/, "https://")
-							redirect(s)
-						} catch (e) {
-							console.log("Invalid pointer.")
-							document.body.innerHTML = ""
-							document.body.style = "margin: 2.7rem"
-							document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Invalid argument</h1>\n\t<br />\n\tPlease check again.\n`
+		var para = list[i].replace(/=*$/, "")
+		if (para.match(/.=./)) {
+			var k = para.match(/^(.+?)=.+$/)[1]
+			var v = para.match(/^.+?=(.+)$/)[1]
+			if (v.startsWith("*")) {
+				silent = true
+				v = v.replace(/^\*+/, "")
+			}
+			v = decodeURI(v.replace(/\*/g, "/"))
+			switch (k) {
+				case "url":
+					try {
+						v = pdec(v)
+						if (v.startsWith("*")) {
+							silent = true
+							v = v.replace(/^\*+/, "")
 						}
-						break
-					case "b":
-						redirect(`https://b23.tv/${s}`)
-						break
-					case "e":
-					case "eg":
-						redirect(`https://e-hentai.org/g/${s}`)
-						break
-					case "es":
-						redirect(`https://e-hentai.org/s/${s}`)
-						break
-					case "ew":
-						redirect(`https://ehwiki.org/index.php?title=Special:Search&fulltext=Search&search=${encodeURIComponent(s)}`)
-						break
-					case "g":
-					case "gp":
-						redirect(`https://gelbooru.com/index.php?page=post&s=view&id=${s}`)
-						break
-					case "k":
-					case "kp":
-						redirect(`https://konachan.com/post/show/${s}`)
-						break
-					case "n":
-						if (0);
-						else if (s.startsWith("sm")) redirect(`https://www.nicovideo.jp/watch/${s}`)
-						else if (s.startsWith("ch")) redirect(`https://ch.nicovideo.jp/channel/${s}`)
-						else if (s.startsWith("im")) redirect(`https://seiga.nicovideo.jp/seiga/${s}`)
-						else if (s.startsWith("lv")) redirect(`https://live.nicovideo.jp/watch/${s}`)
-						else if (s.startsWith("mg")) redirect(`https://seiga.nicovideo.jp/watch/${s}`)
-						else if (s.startsWith("nw")) redirect(`https://news.nicovideo.jp/watch/${s}`)
-						else if (s.startsWith("so")) redirect(`https://www.nicovideo.jp/watch/${s}`)
-						break
-					case "nh":
-						redirect(`https://nhentai.net/g/${s}`)
-						break
-					case "nj":
-						redirect(`https://nijie.info/view.php?id=${s}`)
-						break
-					case "p":
-					case "pa":
-						redirect(`https://www.pixiv.net/artworks/${s}`)
-						break
-					case "pu":
-						redirect(`https://www.pixiv.net/users/${s}`)
-						break
-					case "t":
-					case "ts":
-						redirect(`https://twitter.com/i/status/${s}`)
-						break
-					case "ti":
-						redirect(`https://pbs.twimg.com/media/${s}?format=jpg&name=large`)
-						break
-					case "w":
-						redirect(`https://m.weibo.cn/status/${s}`)
-						break
-					case "y":
-					case "yp":
-						redirect(`https://yande.re/post/show/${s}`)
-						break
-					case "yt":
-						redirect(`https://youtu.be/${s}`)
-						break
-					default:
-						console.log("Unknown parameter.")
-				}
-				break
-			default:
-				console.log("Nothing to do.")
+						if (v.startsWith("//")) v = v.replace(/^\/+/, "https://")
+						redirect(v)
+					} catch (e) {
+						console.log("Invalid pointer.")
+						document.body.innerHTML = ""
+						document.body.style = "margin: 2.7rem"
+						document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Invalid argument</h1>\n\t<br />\n\tPlease check again.\n`
+					}
+					break
+				case "b":
+					if (v.match(/^\w{6,11}$/)) redirect(`https://b23.tv/${v}` /* noob b23.tv fvcking eating arg */)
+					else if (v.match(/^au/)) redirect(`https://www.bilibili.com/audio/${v}`)
+					else if (v.match(/^av/)) redirect(`https://www.bilibili.com/video/${v}`)
+					else if (v.match(/^md/)) redirect(`https://www.bilibili.com/bangumi/media/${v}`)
+					else if (v.match(/^ss/)) redirect(`https://www.bilibili.com/bangumi/play/${v}`)
+					else redirect(`https://www.bilibili.com/${v}`)
+					break
+				case "e":
+				case "eg":
+					redirect(`https://e-hentai.org/g/${v}`)
+					break
+				case "es":
+					redirect(`https://e-hentai.org/s/${v}`)
+					break
+				case "ew":
+					redirect(`https://ehwiki.org/index.php?title=Special:Search&fulltext=Search&search=${encodeURIComponent(v)}`)
+					break
+				case "g":
+				case "gp":
+					redirect(`https://gelbooru.com/index.php?page=post&s=view&id=${v}`)
+					break
+				case "k":
+				case "kp":
+					redirect(`https://konachan.com/post/show/${v}`)
+					break
+				case "n":
+					if (0);
+					else if (v.startsWith("sm")) redirect(`https://www.nicovideo.jp/watch/${v}`)
+					else if (v.startsWith("ch")) redirect(`https://ch.nicovideo.jp/channel/${v}`)
+					else if (v.startsWith("im")) redirect(`https://seiga.nicovideo.jp/seiga/${v}`)
+					else if (v.startsWith("lv")) redirect(`https://live.nicovideo.jp/watch/${v}`)
+					else if (v.startsWith("mg")) redirect(`https://seiga.nicovideo.jp/watch/${v}`)
+					else if (v.startsWith("nw")) redirect(`https://news.nicovideo.jp/watch/${v}`)
+					else if (v.startsWith("so")) redirect(`https://www.nicovideo.jp/watch/${v}`)
+					break
+				case "nh":
+					redirect(`https://nhentai.net/g/${v}`)
+					break
+				case "nj":
+					redirect(`https://nijie.info/view.php?id=${v}`)
+					break
+				case "p":
+				case "pa":
+					redirect(`https://www.pixiv.net/artworks/${v}`)
+					break
+				case "pu":
+					redirect(`https://www.pixiv.net/users/${v}`)
+					break
+				case "t":
+				case "ts":
+					redirect(`https://twitter.com/i/status/${v}`)
+					break
+				case "ti":
+					redirect(`https://pbs.twimg.com/media/${v}?format=jpg&name=large`)
+					break
+				case "w":
+					redirect(`https://m.weibo.cn/status/${v}`)
+					break
+				case "y":
+				case "yp":
+					redirect(`https://yande.re/post/show/${v}`)
+					break
+				case "yt":
+					redirect(`https://youtu.be/${v}`)
+					break
+				default:
+					console.log("Unknown parameter.")
+			}
+		} else {
+			console.log("Nothing to do.")
 		}
 	}
 }
