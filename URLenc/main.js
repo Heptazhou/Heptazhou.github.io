@@ -73,16 +73,16 @@
 					var k = s.match(/^(.+?)\//)[1]
 					var v = s.match(/^.+?\/(.+)/)[1]
 					switch (k) {
+						case "b23.tv":
+							if (2 < v.length && v.length < 12) if (!/(au|av|bv|md|ss)/i.test(v.substring(0, 2)) || /[a-z]/i.test(v.substring(2))) throw ""
 						case "bilibili.com":
 						case "www.bilibili.com":
-							v = (v.match(/^(?:audio|bangumi\/(?:media|play)|video)\/(.+)/) || v.match(/^(av\d+.*)/))[1]
-						case "b23.tv":
-							if ((s = v.match(/^av(\d+.*)/))) {
-								v = s[1]
-								k = "bv"
-								break
-							}
 							k = "b"
+							v = (v.match(/^(?:audio|bangumi\/(?:media|play)|video)\/(.+)/) || v.match(/^(av\d+.*)/) || ["", v])[1]
+							if ((s = v.match(/^av(\d+.*)\b/))) {
+								k = "bv"
+								v = s[1]
+							}
 							break
 						case "space.bilibili.com":
 							k = "bu"

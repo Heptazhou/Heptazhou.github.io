@@ -50,7 +50,7 @@ function hash_func() {
 					}
 					break
 				case "b":
-					if (v.match(/^\w{6,11}$/)) redirect(`https://b23.tv/${v}` /* noob b23.tv fvcking eating arg */)
+					if (0);
 					else if (v.match(/^au/)) redirect(`https://www.bilibili.com/audio/${v}`)
 					else if (v.match(/^av/)) redirect(`https://www.bilibili.com/video/${v}`)
 					else if (v.match(/^md/)) redirect(`https://www.bilibili.com/bangumi/media/${v}`)
