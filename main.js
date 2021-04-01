@@ -51,11 +51,12 @@ function hash_func() {
 					break
 				case "b":
 					if (0);
-					else if (v.match(/^au/)) redirect(`https://www.bilibili.com/audio/${v}`)
-					else if (v.match(/^av/)) redirect(`https://www.bilibili.com/video/${v}`)
-					else if (v.match(/^md/)) redirect(`https://www.bilibili.com/bangumi/media/${v}`)
-					else if (v.match(/^ss/)) redirect(`https://www.bilibili.com/bangumi/play/${v}`)
-					else redirect(`https://www.bilibili.com/${v}`)
+					else if (/^au/i.test(v)) redirect(`https://www.bilibili.com/audio/${v}`)
+					else if (/^av/i.test(v)) redirect(`https://www.bilibili.com/video/${v}`)
+					else if (/^bv/i.test(v)) redirect(`https://www.bilibili.com/video/${v}`)
+					else if (/^md/i.test(v)) redirect(`https://www.bilibili.com/bangumi/media/${v}`)
+					else if (/^ss/i.test(v)) redirect(`https://www.bilibili.com/bangumi/play/${v}`)
+					else (silent = false) || redirect(`https://www.bilibili.com/${v}`)
 					break
 				case "bu":
 					redirect(`https://space.bilibili.com/${v}`)
@@ -122,7 +123,7 @@ function hash_func() {
 					redirect(`https://youtu.be/${v}`)
 					break
 				default:
-					console.log("Unknown parameter.")
+					console.log("Unknown key.")
 			}
 		} else {
 			console.log("Nothing to do.")
