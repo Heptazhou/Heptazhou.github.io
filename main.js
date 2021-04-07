@@ -23,7 +23,7 @@ function hash_func() {
 	var list = hashsplit(location.hash)
 	if (list == null) return null
 	for (var i = 0; i < list.length; i++) {
-		var para = list[i].replace(/=*$/, "")
+		var para = list[i].replace(/=*\s*$/, "").trim()
 		if (para.match(/.=./)) {
 			var k = para.match(/^(.+?)=.+$/)[1]
 			var v = para.match(/^.+?=(.+)$/)[1]
@@ -31,7 +31,8 @@ function hash_func() {
 				silent = true
 				v = v.replace(/^\*+/, "")
 			}
-			v = decodeURI(v.replace(/\*/g, "/"))
+			v = decodeURI(v.replace(/\*/g, "/")).trim()
+			v = clean_illegal(v)
 			switch (k) {
 				case "url":
 					try {
