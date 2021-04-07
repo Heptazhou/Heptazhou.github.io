@@ -11,12 +11,12 @@ function redirect(dest) {
 	document.body.innerHTML = ""
 	document.body.style = "margin: 2.7rem"
 	console.log(Base64.encode(dest).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_"))
-	if (silent === false) {
-		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Click to redirect...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> ${dest}</a>\n`
-	}
 	if (silent === true) {
 		location.href = dest
 		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Redirecting...</h1>\n\t<br />\n\t<a href="javascript:;" onclick="hash_func()">> Click to retry if needed.</a>\n`
+	}
+	if (silent === false) {
+		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Click to redirect...</h1>\n\t<br />\n\t<a href="${encodeURI(dest)}">> ${dest}</a>\n`
 	}
 }
 function hash_func() {
@@ -28,7 +28,7 @@ function hash_func() {
 			var k = para.match(/^(.+?)=.+$/)[1]
 			var v = para.match(/^.+?=(.+)$/)[1]
 			if (v.startsWith("*")) {
-				silent = true
+				silent = false
 				v = v.replace(/^\*+/, "")
 			}
 			v = decodeURI(v.replace(/\*/g, "/")).trim()
@@ -38,7 +38,7 @@ function hash_func() {
 					try {
 						v = pdec(v)
 						if (v.startsWith("*")) {
-							silent = true
+							silent = false
 							v = v.replace(/^\*+/, "")
 						}
 						if (v.startsWith("//")) v = v.replace(/^\/+/, "https://")
@@ -131,6 +131,6 @@ function hash_func() {
 		}
 	}
 }
-var silent = false
+var silent = true
 hash_func()
 window.addEventListener("hashchange", hash_func, false)

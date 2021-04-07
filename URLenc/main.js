@@ -32,19 +32,19 @@
 		}
 		var execute = function () {
 			try {
-				var s = cleanurl(decodeURIComponent(input.val()).trim())
+				var s = cleanurl(clean_illegal(decodeURIComponent(input.val()).trim()))
 				if (s == "") output1.val("")
 				else {
 					if (s.startsWith("*")) {
-						var silent = true
+						var silent = false
 						s = s.replace(/^\*+/, "")
 					} else {
-						var silent = false
+						var silent = true
 					}
 					// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
 					if (/^[a-z][a-z0-9+.-]*:.+/i.test(s)) s = s.replace(/^https:(?=\/\/.+)/i, "")
 					else if (s[0] != "/") s = "//" + s
-					if (silent == true) s = "*" + s
+					if (silent == false) s = "*" + s
 					s = method(s).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_")
 					output1.val(`heptazhou.com/&${s}`)
 				}
@@ -52,14 +52,14 @@
 				output1.val(e)
 			}
 			try {
-				var s = cleanurl(decodeURIComponent(input.val()).trim())
+				var s = cleanurl(clean_illegal(decodeURIComponent(input.val()).trim()))
 				if (s == "") output2.val("")
 				else {
 					if (s.startsWith("*")) {
-						var silent = true
+						var silent = false
 						s = s.replace(/^\*+/, "")
 					} else {
-						var silent = false
+						var silent = true
 					}
 					// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
 					if (/^[a-z][a-z0-9+.-]*:.+/i.test(s)) {
