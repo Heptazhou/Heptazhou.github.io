@@ -20,7 +20,7 @@
 		var checkbox = $("#auto-update")
 		/* https://github.com/the1812/Bilibili-Evolved/blob/master/min/url-params-clean.min.js */
 		function cleanurl(z) {
-			const a = ["__cf_chl_captcha_tk__", "__cf_chl_jschl_tk__", "_ff", "_ts", "ab_channel", "accept_quality", "ad_od", "adpicid", "amp", "apptime", "appuid", "bar", "bbid", "bddid", "bdtype", "broadcast_type", "bsource", "bu", "cg", "ch", "cid", "client", "cs", "ct", "current_qn", "current_quality", "di", "display", "dm_progress", "dmid", "euri", "expiration", "f", "feature", "fm", "fr", "from_source", "from_spmid", "from", "fromid", "fromtitle", "fromurl", "gsm", "gx", "hs", "inputT", "ipn", "is_reflow", "is", "isappinstalled", "islist", "issp", "jid", "lm", "ln", "lpn", "mpshare", "msource", "network_status", "network", "oq", "oriquery", "os", "p2p_type", "pid", "platform_network_status", "playurl_h264", "playurl_h265", "pn", "prefixsug", "puid", "quality_description", "querylist", "rand", "ref_src", "ref_url", "refd", "referfrom", "retcode", "rn", "rsf", "rsp", "rsv_bp", "rsv_btype", "rsv_cq", "rsv_dl", "rsv_enter", "rsv_idx", "rsv_iqid", "rsv_pq", "rsv_spt", "rsv_t", "rt", "s", "scene", "seid", "session_id", "share_medium", "share_plat", "share_source", "share_tag", "sharer_shareid", "sharer_sharetime", "simid", "sme", "source", "sourceFrom", "spm_id_from", "spn", "src", "srcid", "tdsourcetag", "timestamp", "tn", "ts", "unique_k", "usm", "utm_campaign", "utm_medium", "utm_source", "utm_term", "utm_user", "visit_id", "weibo_id", "wfr", "wxa_abtest", "xhsshare", "z"]
+			const a = ["__cf_chl_captcha_tk__", "__cf_chl_jschl_tk__", "_ff", "_ts", "ab_channel", "accept_quality", "ad_od", "adpicid", "amp", "apptime", "appuid", "bar", "bbid", "bddid", "bdtype", "broadcast_type", "bsource", "bu", "cg", "ch", "cid", "client", "cs", "ct", "cu", "current_qn", "current_quality", "di", "display", "dm_progress", "dmid", "euri", "expiration", "f", "feature", "fm", "fr", "from_source", "from_spmid", "from", "fromid", "fromtitle", "fromurl", "gsm", "gx", "hs", "inputT", "ipn", "is_reflow", "is", "isappinstalled", "islist", "issp", "jid", "lm", "ln", "lpn", "mpshare", "msource", "network_status", "network", "oq", "oriquery", "os", "p2p_type", "pid", "platform_network_status", "playurl_h264", "playurl_h265", "pn", "prefixsug", "puid", "quality_description", "querylist", "rand", "ref_src", "ref_url", "refd", "referfrom", "retcode", "rn", "rsf", "rsp", "rsv_bp", "rsv_btype", "rsv_cq", "rsv_dl", "rsv_enter", "rsv_idx", "rsv_iqid", "rsv_pq", "rsv_spt", "rsv_t", "rt", "s", "scene", "seid", "session_id", "share_medium", "share_plat", "share_source", "share_tag", "sharer_shareid", "sharer_sharetime", "simid", "sme", "source", "sourceFrom", "spm_id_from", "spn", "src", "srcid", "tdsourcetag", "timestamp", "tn", "ts", "unique_k", "usm", "utm_campaign", "utm_medium", "utm_source", "utm_term", "utm_user", "visit_id", "weibo_id", "wfr", "wxa_abtest", "xhsshare", "z"]
 			const b = (i) => i
 			const c = z.match(/(?:\?.+)?$/)[0]
 			const d = c.substring(1).split("&")
@@ -158,25 +158,30 @@
 							break
 						case "pbs.twimg.com":
 							k = "ti"
-							v = v.match(/^media\/([^?]+)/)[1]
+							v = v.match(/^media\/([^.?]+)/)[1]
 							break
 						case "yande.re":
 							k = "y"
 							v = v.match(/^post\/show\/(.+)/)[1]
 							break
-						case "www.youtube.com":
-							var t = v.match(/^watch\?(?:.+?&)*(t=\d+)/)
-							v = (v.match(/^watch\?(?:.+?&)*v=([\w-]+)/) || v.match(/^embed\/([\w-]+)/))[1]
-							if (t) v = v + "?" + t[1]
 						case "youtu.be":
 							k = "yt"
+							v = v.replace("?", "&")
+							break
+						case "youtube.com":
+						case "m.youtube.com":
+						case "www.youtube.com":
+							k = "yt"
+							var t = v.match(/^watch\?(?:.+?&)*(t=\d+)/)
+							v = (v.match(/^watch\?(?:.+?&)*v=([\w-]+)/) || v.match(/^embed\/([\w-]+)/))[1]
+							if (t) v = v + "&" + t[1]
 							break
 						default:
 							k = ""
 					}
 					if (k == "" || v == "") throw ""
 					v = v.replace(/\*/g, "%2a").replace(/\//g, "*")
-					output2.val(`heptazhou.com/#${k}=*${v}`)
+					output2.val(`heptazhou.com/#${k}=${v}`)
 				}
 			} catch (e) {
 				output2.val("")

@@ -111,7 +111,7 @@ function hash_func() {
 					redirect(`https://twitter.com/i/status/${v}`)
 					break
 				case "ti":
-					redirect(`https://pbs.twimg.com/media/${v}?format=jpg&name=large`)
+					redirect(`https://pbs.twimg.com/media/${v}.jpg?name=large`)
 					break
 				case "w":
 					redirect(`https://m.weibo.cn/status/${v}`)
@@ -121,7 +121,7 @@ function hash_func() {
 					redirect(`https://yande.re/post/show/${v}`)
 					break
 				case "yt":
-					redirect(`https://youtu.be/${v}`)
+					redirect(`https://www.youtube.com/watch?v=${v}`)
 					break
 				default:
 					console.log("Unknown key.")
