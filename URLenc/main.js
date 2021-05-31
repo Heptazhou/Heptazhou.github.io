@@ -20,7 +20,7 @@
 		var checkbox = $("#auto-update")
 		/* https://github.com/the1812/Bilibili-Evolved/blob/master/min/url-params-clean.min.js */
 		function cleanurl(z) {
-			const a = ["__cf_chl_captcha_tk__", "__cf_chl_jschl_tk__", "_ff", "_ts", "ab_channel", "accept_quality", "ad_od", "adpicid", "amp", "apptime", "appuid", "bar", "bbid", "bddid", "bdtype", "broadcast_type", "bsource", "bu", "cg", "ch", "cid", "client", "cs", "ct", "cu", "current_qn", "current_quality", "di", "display", "dm_progress", "dmid", "euri", "expiration", "f", "feature", "fm", "fr", "from_source", "from_spmid", "from", "fromid", "fromtitle", "fromurl", "gsm", "gx", "hs", "inputT", "ipn", "is_reflow", "is", "isappinstalled", "islist", "issp", "jid", "lm", "ln", "lpn", "mpshare", "msource", "network_status", "network", "oq", "oriquery", "os", "p2p_type", "pid", "platform_network_status", "playurl_h264", "playurl_h265", "pn", "prefixsug", "puid", "quality_description", "querylist", "rand", "ref_src", "ref_url", "refd", "referfrom", "retcode", "rn", "rsf", "rsp", "rsv_bp", "rsv_btype", "rsv_cq", "rsv_dl", "rsv_enter", "rsv_idx", "rsv_iqid", "rsv_pq", "rsv_spt", "rsv_t", "rt", "s", "scene", "seid", "session_id", "share_medium", "share_plat", "share_source", "share_tag", "sharer_shareid", "sharer_sharetime", "simid", "sme", "source", "sourceFrom", "spm_id_from", "spn", "src", "srcid", "tdsourcetag", "timestamp", "tn", "ts", "unique_k", "usm", "utm_campaign", "utm_medium", "utm_source", "utm_term", "utm_user", "visit_id", "weibo_id", "wfr", "wxa_abtest", "xhsshare", "z"]
+			const a = ["__cf_chl_captcha_tk__", "__cf_chl_jschl_tk__", "_ff", "_ts", "ab_channel", "accept_quality", "ad_od", "adpicid", "amp", "app_version", "apptime", "appuid", "bar", "bbid", "bddid", "bdtype", "broadcast_type", "bsource", "bu", "cg", "ch", "cid", "client", "cs", "ct", "cu", "current_qn", "current_quality", "di", "display", "dm_progress", "dmid", "eqid", "euri", "expiration", "f", "feature", "featurecode", "fm", "fr", "from_source", "from_spmid", "from", "fromid", "fromtitle", "fromurl", "gsm", "gx", "hs", "inputT", "ipn", "is_reflow", "is", "isappinstalled", "islist", "issp", "jid", "lm", "ln", "lpn", "mpshare", "msource", "network_status", "network", "oq", "oriquery", "os", "p1", "p2p_type", "pid", "platform_network_status", "playurl_h264", "playurl_h265", "pn", "prefixsug", "puid", "qbl", "qid", "quality_description", "query", "querylist", "rand", "ref_src", "ref_url", "refd", "referfrom", "retcode", "rn", "rsf", "rsp", "rsv_bp", "rsv_btype", "rsv_cq", "rsv_dl", "rsv_enter", "rsv_idx", "rsv_iqid", "rsv_pq", "rsv_spt", "rsv_t", "rt", "s", "sc", "scene", "seid", "session_id", "share_medium", "share_plat", "share_source", "share_tag", "sharer_shareid", "sharer_sharetime", "simid", "sme", "source", "sourceFrom", "sourceType", "spm_id_from", "spn", "src", "srcid", "tdsourcetag", "timestamp", "tn", "ts", "uct", "unique_k", "user", "usm", "utm_campaign", "utm_medium", "utm_source", "utm_term", "utm_user", "visit_id", "weibo_id", "wfr", "wm", "wxa_abtest", "xhsshare", "z"]
 			const b = (i) => i
 			const c = z.match(/(?:\?.+)?$/)[0]
 			const d = c.substring(1).split("&")
@@ -74,8 +74,9 @@
 					var v = s.match(/^.+?\/(.+)/)[1]
 					switch (k) {
 						case "b23.tv":
-							if (2 < v.length && v.length < 12) if (!/(au|av|bv|md|ss)/i.test(v.substring(0, 2)) || /[a-z]/i.test(v.substring(2))) throw ""
+							if (v.length < 3 || !/(au|av|bv|md|ss)/i.test(v.substring(0, 2)) || !/^\d+?(#.*)?$/.test(v.substring(2))) throw ""
 						case "bilibili.com":
+						case "m.bilibili.com":
 						case "www.bilibili.com":
 							k = "b"
 							v = (v.match(/^(?:audio|bangumi\/(?:media|play)|video)\/(.+)/) || v.match(/^(av\d+.*)/) || ["", v])[1]
