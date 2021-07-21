@@ -1,0 +1,11 @@
+encoding: UTF-8
+future: true
+gfm_quirks: []
+github: [metadata]
+jailed: false
+kramdown:
+  hard_wrap: true
+  input: GFM
+  smart_quotes: ["apos", "apos", "quot", "quot"]
+plugins:
+  - jekyll-redirect-from
