@@ -12,7 +12,7 @@ function redirect(dest) {
 	document.body.style = "margin: 2.7rem"
 	console.log(Base64.encode(dest).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_"))
 	if (silent === true) {
-		location.href = dest
+		location.replace(dest)
 		document.body.innerHTML = `\n\t<h1 style="line-height: 3.14rem; font-weight: normal">Redirecting...</h1>\n\t<br />\n\t<a href="javascript:;" onclick="hash_func()">> Click to retry if needed.</a>\n`
 	}
 	if (silent === false) {
