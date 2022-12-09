@@ -1,7 +1,7 @@
 function hashsplit(str) {
 	var list = str.match(/^#\/*(.*?)\/*$/)
 	if (list != null && list[1] != "") return list[1].split(/\/+/)
-	else return null
+	return null
 }
 function pdec(pointer) {
 	while (pointer.length % 4 != 0) pointer += "="
@@ -28,11 +28,10 @@ function hash_func() {
 			var k = para.match(/^(.+?)=.+$/)[1]
 			var v = para.match(/^.+?=(.+)$/)[1]
 			if (v.startsWith("*")) {
-				silent = false
 				v = v.replace(/^\*+/, "")
+				silent = false
 			}
-			v = decodeURI(v.replace(/\*/g, "/")).trim()
-			v = clean_illegal(v)
+			v = clean_illegal(decodeURI(v.replace(/\*/g, "/")).trim())
 			switch (k) {
 				case "url":
 					try {
@@ -111,7 +110,7 @@ function hash_func() {
 					redirect(`https://twitter.com/i/status/${v}`)
 					break
 				case "ti":
-					redirect(`https://pbs.twimg.com/media/${v}.jpg?name=large`)
+					redirect(`https://pbs.twimg.com/media/${v}.jpg?name=orig`)
 					break
 				case "w":
 					redirect(`https://m.weibo.cn/status/${v}`)
@@ -126,9 +125,7 @@ function hash_func() {
 				default:
 					console.log("Unknown key.")
 			}
-		} else {
-			console.log("Nothing to do.")
-		}
+		} else console.log("Nothing to do.")
 	}
 }
 var silent = true
