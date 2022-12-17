@@ -1,10 +1,16 @@
 function hashsplit(str) {
 	var list = str.match(/^#\/*(.*?)\/*$/)
-	if (list != null && list[1] != "") return list[1].split(/\/+/)
+	if (list !== null && list[1] !== "") return list[1].split(/\/+/)
 	return null
 }
+function b62dec(str) {
+	if (str.length > 16 && /^\d+$/.test(str)) return str
+	str = require("base")("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").decode(str)
+	str = require("base")("0123456789").encode(str)
+	return str
+}
 function pdec(pointer) {
-	while (pointer.length % 4 != 0) pointer += "="
+	while (pointer.length % 4 !== 0) pointer += "="
 	return decodeURI(Base64.decode(pointer))
 }
 function redirect(dest) {
@@ -21,7 +27,7 @@ function redirect(dest) {
 }
 function hash_func() {
 	var list = hashsplit(location.hash)
-	if (list == null) return null
+	if (list === null) return null
 	for (var i = 0; i < list.length; i++) {
 		var para = list[i].replace(/=*\s*$/, "").trim()
 		if (para.match(/.=./)) {
@@ -107,7 +113,7 @@ function hash_func() {
 					break
 				case "t":
 				case "ts":
-					redirect(`https://twitter.com/i/status/${v}`)
+					redirect(`https://twitter.com/i/status/${b62dec(v)}`)
 					break
 				case "ti":
 					redirect(`https://pbs.twimg.com/media/${v}.jpg?name=orig`)

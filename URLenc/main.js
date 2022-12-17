@@ -1,5 +1,7 @@
 /* https://github.com/emn178/online-tools */
 ;(function ($, window, document, undefined) {
+	window.decode = require("base")("0123456789").decode
+	window.encode = require("base")("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").encode
 	window.method = Base64.encode
 	function copy_output() {
 		var copyText = document.querySelector("#output-common")
@@ -18,34 +20,27 @@
 		var output1 = $("#output-common")
 		var output2 = $("#output-special")
 		var checkbox = $("#auto-update")
-		/* https://github.com/the1812/Bilibili-Evolved/blob/master/min/url-params-clean.min.js */
+		/* https://github.com/the1812/Bilibili-Evolved/blob/v2.0.8/min/url-params-clean.min.js */
 		function cleanurl(z) {
 			// prettier-ignore
 			const a = ["__cf_chl_captcha_tk__", "__cf_chl_jschl_tk__", "_ff", "_ts", "ab_channel", "accept_quality", "ad_od", "adpicid", "amp", "app_version", "apptime", "appuid", "bar", "bbid", "bddid", "bdtype", "broadcast_type", "bsource", "bu", "cg", "ch", "cid", "client", "cs", "ct", "cu", "current_qn", "current_quality", "di", "display", "dm_progress", "dmid", "eqid", "euri", "expiration", "f", "fbclid", "feature", "featurecode", "fm", "fr", "from_source", "from_spmid", "from", "fromid", "fromtitle", "fromurl", "group_id", "gsm", "gx", "hs", "inputT", "ipn", "is_reflow", "is", "isappinstalled", "islist", "issp", "jid", "lfid", "lm", "ln", "lpn", "luicode", "mpshare", "msource", "network_status", "network", "oid", "oq", "oriquery", "os", "p1", "p2p_type", "pid", "platform_network_status", "playurl_h264", "playurl_h265", "pn", "pp", "prefixsug", "puid", "qbl", "qid", "quality_description", "query", "querylist", "rand", "ref_src", "ref_url", "refd", "referfrom", "req_id", "retcode", "rn", "rsf", "rsp", "rsv_bp", "rsv_btype", "rsv_cq", "rsv_dl", "rsv_enter", "rsv_idx", "rsv_iqid", "rsv_pq", "rsv_spt", "rsv_t", "rt", "s", "sc", "scene", "seid", "session_id", "sfr", "share_medium", "share_plat", "share_session_id", "share_source", "share_tag", "share_token", "sharer_shareid", "sharer_sharetime", "simid", "sme", "source", "sourceFrom", "sourceType", "spm_id_from", "spm", "spn", "src", "srcid", "tdsourcetag", "timestamp", "tn", "ts", "tt_from", "uct", "unique_k", "user", "usm", "utm_campaign", "utm_content", "utm_medium", "utm_oi", "utm_relevant_index", "utm_source", "utm_term", "utm_user", "visit_id", "weibo_id", "wfr", "wm", "wxa_abtest", "wxshare_count", "xhsshare", "z"]
-			const b = (i) => i
-			const c = z.match(/(?:\?.+)?$/)[0]
-			const d = c.substring(1).split("&")
-			const e = d.filter((j) => !a.some((k) => j.startsWith(`${k}=`)))
-			const f = e.join("&")
-			const g = b(z.replace(c, ""))
-			const h = f ? "?" + f : ""
-			return g + h
+			const b = z.match(/(?:\?.+)?$/)[0]
+			const c = b.substring(1).split("&")
+			const d = c.filter((j) => !a.some((k) => j.startsWith(`${k}=`))).join("&")
+			const e = z.replace(b, "")
+			return !d ? `${e}` : `${e}?${d}`
 		}
 		var execute = function () {
 			try {
 				var s = cleanurl(clean_illegal(decodeURIComponent(input.val()).trim()))
-				if (s == "") output1.val("")
+				if (s === "") output1.val("")
 				else {
-					if (s.startsWith("*")) {
-						var silent = false
-						s = s.replace(/^\*+/, "")
-					} else {
-						var silent = true
-					}
+					var silent = !s.startsWith("*")
+					s = silent ? s : s.replace(/^\*+/, "")
 					// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
 					if (/^[a-z][a-z0-9+.-]*:.+/i.test(s)) s = s.replace(/^https:(?=\/\/.+)/i, "")
-					else if (s[0] != "/") s = "//" + s
-					if (silent == false) s = "*" + s
+					else if (s[0] !== "/") s = "//" + s
+					s = silent ? s : "*" + s
 					s = method(s).replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_")
 					output1.val(`heptazhou.com/&${s}`)
 				}
@@ -54,20 +49,16 @@
 			}
 			try {
 				var s = cleanurl(clean_illegal(decodeURIComponent(input.val()).trim()))
-				if (s == "") output2.val("")
+				if (s === "") output2.val("")
 				else {
-					if (s.startsWith("*")) {
-						var silent = false
-						s = s.replace(/^\*+/, "")
-					} else {
-						var silent = true
-					}
+					var silent = !s.startsWith("*")
+					s = silent ? s : s.replace(/^\*+/, "")
 					// https://www.ietf.org/rfc/rfc3986.html#section-3.1 Scheme
 					if (/^[a-z][a-z0-9+.-]*:.+/i.test(s)) {
 						if (!/^https?:\/{2,}[^\/]/i.test(s)) throw ""
 						s = s.replace(/^https?:\/+/i, "")
 					} else {
-						if (s[0] == "/" && !/^\/{2,}[^\/]/i.test(s)) throw ""
+						if (s[0] === "/" && !/^\/{2,}[^\/]/i.test(s)) throw ""
 						s = s.replace(/^\/+/, "")
 					}
 					s = s.replace(/\/{2,}/g, "/")
@@ -90,6 +81,7 @@
 							k = "bu"
 							break
 						case "e-hentai.org":
+						case "exhentai.org":
 							s = v.match(/^(.+?)\/(.+?)\/*$/)
 							switch (s[1]) {
 								case "g":
@@ -157,6 +149,7 @@
 						case "mobile.twitter.com":
 							k = "t"
 							v = v.match(/^.+?\/status\/(.+)/)[1]
+							v = encode(decode(v))
 							break
 						case "pbs.twimg.com":
 							k = "ti"
@@ -182,8 +175,9 @@
 						default:
 							k = ""
 					}
-					if (k == "" || v == "") throw ""
+					if (k === "" || v === "") throw ""
 					v = v.replace(/\*/g, "%2a").replace(/\//g, "*")
+					v = silent ? v : "*" + v
 					output2.val(`heptazhou.com/#${k}=${v}`)
 				}
 			} catch (e) {
